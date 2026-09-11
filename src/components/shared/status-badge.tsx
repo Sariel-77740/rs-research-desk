@@ -1,0 +1,3 @@
+import type { ExperimentStatus, IdeaStatus, PaperStatus, TaskStatus, WritingStatus } from "@/types";
+const labels: Record<string, string> = { unread:"待读",skimming:"略读",reading:"阅读中",finished:"已读",reproducing:"复现中",archived:"归档",planned:"计划中",running:"运行中",completed:"已完成",failed:"失败",stopped:"已停止",inbox:"收件箱",researching:"调研中",promising:"有潜力",experimenting:"实验中",abandoned:"已放弃",converted_to_project:"已转项目",todo:"待办",doing:"进行中",done:"完成",draft:"草稿",writing:"写作中",review:"审阅中" };
+export function StatusBadge({ status }: { status: PaperStatus | ExperimentStatus | IdeaStatus | TaskStatus | WritingStatus }) { return <span className={`status status-${status}`}>{labels[status]}</span>; }
