@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { experiments as seedExperiments, ideas as seedIdeas, knowledgeNotes as seedKnowledgeNotes, papers as seedPapers, projects as seedProjects, tasks as seedTasks, writingProjects as seedWritingProjects } from "@/data/mock-data";
+import { yaoXiwenPapers } from "@/data/yao-xiwen-papers";
 import type { Experiment, Idea, KnowledgeNote, Paper, Project, Task, WritingProject } from "@/types";
 
 type Profile = { name: string; major: string; direction: string; grade: string; topic: string; stage: string; weeklyGoal: number; weeklyExperimentGoal?: number; weeklyTaskGoal?: number };
@@ -19,7 +20,7 @@ const event = (type: Activity["type"], action: string, detail: string): Activity
 const log = (activities: Activity[], entry: Activity) => [entry, ...activities].slice(0, 20);
 
 export const useWorkspaceStore = create<State>()(persist((set) => ({
-  papers: seedPapers, experiments: seedExperiments, ideas: seedIdeas, projects: seedProjects, knowledgeNotes: seedKnowledgeNotes, writingProjects: seedWritingProjects, tasks: seedTasks, activities: [],
+  papers: [...yaoXiwenPapers, ...seedPapers], experiments: seedExperiments, ideas: seedIdeas, projects: seedProjects, knowledgeNotes: seedKnowledgeNotes, writingProjects: seedWritingProjects, tasks: seedTasks, activities: [],
   profile: { name: "Yun Researcher", major: "Control Engineering", direction: "Remote Sensing Foundation Models", grade: "Graduate Student", topic: "Remote Sensing Vision-Language Model", stage: "Experimenting", weeklyGoal: 5, weeklyExperimentGoal: 1, weeklyTaskGoal: 3 },
   updatePaper: (id, patch) => set(s => { const item = s.papers.find(x => x.id === id); return { papers: change(s.papers, id, patch), activities: log(s.activities, event("paper", "更新论文", patch.title ?? item?.title ?? id)) }; }),
   updateExperiment: (id, patch) => set(s => { const item = s.experiments.find(x => x.id === id); return { experiments: change(s.experiments, id, patch), activities: log(s.activities, event("experiment", "更新实验", patch.name ?? item?.name ?? id)) }; }),
@@ -37,4 +38,9 @@ export const useWorkspaceStore = create<State>()(persist((set) => ({
   addTask: x => set(s => ({ tasks: [x as Task, ...s.tasks] })),
   remove: (kind, id) => set(s => ({ [kind]: s[kind].filter(x => x.id !== id) })),
   updateProfile: patch => set(s => ({ profile: { ...s.profile, ...patch } })),
-}), { name: "rs-research-desk-workspace" }));
+}), { name: "rs-research-desk-workspace", version: 2, migrate: (persistedState, version) => {
+  const state = persistedState as { papers?: Paper[] };
+  if (version >= 2) return state;
+  const existing = state.papers ?? [];
+  return { ...state, papers: [...yaoXiwenPapers.filter(paper => !existing.some(item => item.id === paper.id || item.title === paper.title)), ...existing] };
+} }));
