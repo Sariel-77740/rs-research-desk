@@ -3,7 +3,7 @@
 import { Pencil, Plus, Trash2, X } from "lucide-react";
 import { useState } from "react";
 
-export type EditorField = { key: string; label: string; type?: "text" | "textarea" | "number" | "date" | "select"; options?: Array<[string, string]> };
+export type EditorField = { key: string; label: string; type?: "text" | "textarea" | "number" | "date" | "time" | "select"; options?: Array<[string, string]> };
 type Value = string | number;
 type Props = { title: string; fields: EditorField[]; initialValues: object; onSave: (values: Record<string, string>) => void; mode?: "edit" | "create"; triggerLabel?: string; editLabel?: string };
 

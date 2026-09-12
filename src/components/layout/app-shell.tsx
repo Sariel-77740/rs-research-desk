@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, Bot, ChevronsUpDown, Database, FilePenLine, FlaskConical, FolderKanban, GitFork, Home, Lightbulb, Menu, Moon, Search, Settings, Sun, X, Zap } from "lucide-react";
+import { BookOpen, Bot, CalendarDays, ChevronsUpDown, Database, FilePenLine, FlaskConical, FolderKanban, GitFork, GraduationCap, Home, Lightbulb, Menu, Moon, Search, Settings, Sun, X, Zap } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import { experiments, ideas, papers, projects } from "@/data/mock-data";
 import { useUIStore } from "@/lib/store";
 import { useWorkspaceStore } from "@/lib/workspace-store";
 
-const nav = [{ href: "/", label: "Dashboard", icon: Home }, { href: "/papers", label: "Papers", icon: BookOpen }, { href: "/experiments", label: "Experiments", icon: FlaskConical }, { href: "/ideas", label: "Ideas", icon: Lightbulb }, { href: "/projects", label: "Projects", icon: FolderKanban }];
+const nav = [{ href: "/", label: "Dashboard", icon: Home }, { href: "/papers", label: "Papers", icon: BookOpen }, { href: "/experiments", label: "Experiments", icon: FlaskConical }, { href: "/ideas", label: "Ideas", icon: Lightbulb }, { href: "/projects", label: "Projects", icon: FolderKanban }, { href: "/courses", label: "Courses", icon: GraduationCap }, { href: "/schedule", label: "Schedule", icon: CalendarDays }];
 const library = [{ href: "/knowledge", label: "Knowledge", icon: Bot }, { label: "Datasets", icon: Database }, { label: "Models", icon: Zap }, { href: "/writing", label: "Writing", icon: FilePenLine }];
 const createItems = ["New Paper", "New Note", "New Experiment", "New Idea", "New Project", "New Dataset", "New Meeting"];
 
